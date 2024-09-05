@@ -1,0 +1,177 @@
+// Test lexer comment
+    /* */
+    /* /* */
+    /* // */
+    // /**/
+    // /*
+    // */
+
+// Test lexer each token (sep = whitespace) 
+    // assign to if else do for begin end print read true false := || && < > == <= <> >= ! ( ) [ ] { } + - * / ; ,
+
+// Test lexer each token (sep = \n\r) 
+    /*assign 
+    to
+    if
+    else
+    do
+    for
+    begin
+    end
+    print
+    read
+    true 
+    false
+    :=
+    ||
+    &&
+    <
+    >
+    ==
+    <=
+    <>
+    >=
+    !
+    (
+    )
+    [
+    ]
+    {
+    }
+    +
+    -
+    *
+    /
+    ;
+    ,*/
+
+// Test lexer each token (sep = null) 
+    // assigntoifelsedoforbeginendprintreadtruefalse:=||&&<>==<=<>>=!()[]{}+-*/;,
+
+// Test lexer priority (Token, ID)
+    /*read idname               // multi char token with sep
+    readidname                  // multi char token without sep
+    idnameread                  
+    *idname                     // singol char token*/
+
+// Test lexer priority (Token, Number)
+    /*read 10                   // multi char token with sep
+    read10                      // multi char token without sep
+    10read
+    *10                         // singol char token
+    0
+    010                         // throw java.lang.RuntimeException: Zero fill not supported*/
+
+// Example [valutatore/parser] basic
+    // )2          // start
+    // 2+(         // expr
+    // 5+)         // term
+    // 1+2(        // termp
+    // 1*+2        // fact
+    // 1+2)        // syntax error
+
+    // 1 + (5 * (5 + 5) / 2)
+    // 3 * (4 + 2) - 5 + 2 * 2 * 2 + 7 * 5 - 4 + 12 / 3 + 6 * 2+ (8 - 3) * 2 + 1+ 5 * (3 + 2) - 4 + 7 + 4 / 2 + 3 * 6 + 9 * 2 + 3 * 3 - 5 + 15 / 3 + 2 * 4 + 10 - 2 * 3 + 4 * 4 + 6 * (2 + 4) - 8
+
+// Example [valutatore/parser] full
+
+// Example 0
+    /*read(x); 
+    if (> x 5) print(x) else print(0) end*/
+
+// Example 1
+    /*read(x, y, z);                // input x, y, z number
+    if (> x y)                      // print max on x, y, z
+        if (> x z) print(x) 
+        else       print(z) end
+    else
+        if (> y z) print(y) 
+        else       print(z) end
+    end*/
+
+// Example 2
+    /*read(x, y);               // input x, y number
+    if (> x y) print(x)         // print max
+    else       print(y) end*/
+
+    /*read(z);
+    for (> z 0) do {            // prints from x to 0
+        assign [- z 1 to z];    // z--;
+        print(z)
+    }*/
+
+// Example 3
+    /*read(x, y);                 
+    for (z:=x; > z 0) do {
+        for (i:=y; > i 0) do {       
+            print(i)
+            ;assign [- i 1 to i]
+        }
+        ;assign [- z 1 to z]
+    }*/
+
+// Example 4
+    /*read(x, y);                 
+    for (z:=x; > z 0) do {
+        for (i:=y; > i 0) do {    
+            print(i)   
+            // if (> i 5) print(i) end
+            ;assign [- i 1 to i]
+        }
+        ;assign [- z 1 to z]
+    }*/
+
+    /*read(x);        
+    for (i:=x; > i 0) do {  
+        print(i);
+        assign [- i 1 to i]
+    }*/
+
+// Example 5
+    /*read(x); 
+    if (> x 5) 
+        if (> x 10) print(1) 
+        else        print(2) end
+    else 
+        print(3)
+    end*/
+
+// Example 6 (README: decommentare il corpo alla fine :))
+    // if (true) 
+    // if (false) 
+
+    // if (!true) 
+    // if (!false) 
+
+    // if (|| true  false)
+    // if (|| false true) 
+    
+    // if (&& true false)
+    // if (&& false true) 
+    
+    // if(&& true || false false)
+    // if(&& true || false true)
+
+    // if(&& || false false || false false)
+
+    // read(x);
+    // if (|| == x 10 == x 20)
+    // if (&& > x 20 ! > x 30)
+    // if (&& > x 20 < x 100)
+    // if (|| < x 10 && > x 20 ! > x 30)
+
+    // Body
+    // print(1) else print(2) end
+
+// Example 7 (loop + new cond) (README: decommentare il corpo alla fine :))
+    
+    // for (z := 0; true)              do {
+    // for (z := 0; false)             do {
+    // for (z := 0; !false)            do {
+    // for (z := 0; && < z 20 <> z 5)  do {
+    // for (z := 0; || < z 20 <> z 5)  do {
+    // for (z := 0; && !> z 20 <> z 5) do {
+
+    /*  assign [+(z, 1) to z];
+        print(z)
+    }*/
